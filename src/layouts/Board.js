@@ -61,7 +61,7 @@ export default function Board() {
             <Route path="/board/pricing" exact component={Pricing} />
             <Route path="/board/mps/addnew" exact component={Addnew} />
             <Route path="/board" exact component={MainBoard} />
-            <Redirect from="/board" to="/board" />
+            {/* <Redirect from="/board" to="/board" /> */}
           </Switch>
           {/* <FooterSmall absolute /> */}
         </section>

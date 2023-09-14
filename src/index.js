@@ -9,9 +9,9 @@ import "assets/styles/tailwind.css";
 
 // layouts
 
-import Admin from "layouts/Admin.js";
 import Auth from "layouts/Auth.js";
 import Board from "layouts/Board.js";
+import PrivateRoute from "components/private-route/PrivateRoute";
 
 import jwt_decode from "jwt-decode";
 
@@ -19,8 +19,11 @@ import jwt_decode from "jwt-decode";
 
 import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
+// import Index from "views/Index.js";
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
+  console.log(localStorage.jwtToken);
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
@@ -35,7 +38,7 @@ if (localStorage.jwtToken) {
     localStorage.removeItem("jwtToken");
     setAuthToken(false);
     // Redirect to login
-    document.location.href = "/auth/login"
+    document.location.href = "/auth/login";
   }
 }
 
@@ -44,8 +47,8 @@ ReactDOM.render(
     <Switch>
       {/* <Route path="/admin" component={Admin} /> */}
       <Route path="/auth" component={Auth} />
-      <Route path="/board" component={Board} />
-      {/* <Redirect from="*" to="/" /> */}
+      <PrivateRoute path="/board" component={Board} />
+      <Redirect from="*" to="/board" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
