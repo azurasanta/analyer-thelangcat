@@ -9,7 +9,7 @@ const IndexDropdown = () => { // dropdown props
     const popoverDropdownRef = React.createRef();
     const [toggleState, setToggleState] = React.useState(false);
     const openDropdownPopover = () => {
-        createPopper(btnDropdownRef.current, popoverDropdownRef.current, {placement: "bottom-start"});
+        createPopper(btnDropdownRef.current, popoverDropdownRef.current);
         setDropdownPopoverShow(true);
     };
     const closeDropdownPopover = () => {
@@ -19,29 +19,31 @@ const IndexDropdown = () => { // dropdown props
         <Link to="/board" className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
             Dashboard
         </Link>
-        <a className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" href="#pablo"
-            ref={btnDropdownRef}
-            onClick={
-                (e) => {
-                    e.preventDefault();
-                    dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
-                }
-        }>
-            Compare
-        </a>
-        <div ref={popoverDropdownRef}
-            className={
-                (dropdownPopoverShow ? "block " : "hidden ") + "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-        }>
-            <Link to="/board/platform" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-                Performance
-            </Link>
-            <Link to="/board/mps" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-                Positioning
-            </Link>
-            <Link to="/board/mps" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-                Changes
-            </Link>
+        <div>
+            <a className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" href="#pablo"
+                ref={btnDropdownRef}
+                onClick={
+                    (e) => {
+                        e.preventDefault();
+                        dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
+                    }
+            }>
+                Compare
+            </a>
+            <div ref={popoverDropdownRef}
+                className={
+                    (dropdownPopoverShow ? "block " : "hidden ") + "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+            }>
+                <Link to="/board/platform" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+                    Performance
+                </Link>
+                <Link to="/board/mps" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+                    Positioning
+                </Link>
+                <Link to="/board/mps" className="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+                    Changes
+                </Link>
+            </div>
         </div>
         <Link to="/board/mps" className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
             Due Diligence
@@ -59,8 +61,7 @@ const IndexDropdown = () => { // dropdown props
             Account
         </Link>
 
-        <a className="hover:text-blueGray-500 text-red-500 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" href="#pablo"
-            ref={btnDropdownRef}
+        <a className="hover:text-blueGray-500 text-red-500 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
             onClick={
                 (e) => {
                     e.preventDefault();
