@@ -19,12 +19,8 @@ import jwt_decode from "jwt-decode";
 
 import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
-// import Index from "views/Index.js";
-
-console.log('index')
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
-  console.log(localStorage.jwtToken)
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);

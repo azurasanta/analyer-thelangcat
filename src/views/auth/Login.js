@@ -1,18 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useHistory} from "react-router-dom";
-import mockApi from '../../@mock/mockApi';
+
+import { Error } from 'components/Alert/Error';
+
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 
+import mockApi from '../../@mock/mockApi';
 import setAuthToken from 'utils/setAuthToken';
 
 export default function Login() {
     const [userData, setUserData] = useState({email: "", password: "", remember: false});
+    const [errors, setErrors] = useState({})
 
     const history = useHistory()
 
     useEffect(() => {
-      if (localStorage.jwtToken) history.push('/board')
+      if (localStorage.jwtToken) history.push('/board/mps')
         // Fetch data using the mock Axios instance
         // mockApi.get('/items').then(response => {
         //     alert(response)
@@ -34,11 +38,11 @@ export default function Login() {
                 setAuthToken(token);
                 // Decode token to get user data
                 const decoded = jwt_decode(token);
-                // Set current user
-                history.push('/board')
+                history.push('/board/mps')
 
         }).catch(err => {
-          alert("login failed")
+            const errors = err.response.data
+            setErrors(errors)
         });
     };
 
@@ -47,6 +51,7 @@ export default function Login() {
             <div className="container mx-auto px-4 h-full">
                 <div className="flex content-center items-center justify-center h-full">
                     <div className="w-full lg:w-4/12 px-4">
+                        { errors.login_failed ? <Error etype="error" message={errors.login_failed} /> : ''}
                         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
                             <div className="rounded-t mb-0 px-6 py-6">
                                 <div className="text-center mb-3">
@@ -94,9 +99,10 @@ export default function Login() {
                                             value={
                                                 userData.email
                                             }
-                                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            className="invalid border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             placeholder="Email"/>
                                     </div>
+                                    { errors.email ? <Error etype="error" message={errors.email} /> : ''}
 
                                 <div className="relative w-full mb-3">
                                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
@@ -114,6 +120,7 @@ export default function Login() {
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                         placeholder="Password"/>
                                 </div>
+                                { errors.password ? <Error etype="error" message={errors.password} /> : ''}
                             <div>
                                 <label className="inline-flex items-center cursor-pointer">
                                     <input id="remember" type="checkbox"

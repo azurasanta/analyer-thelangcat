@@ -2,11 +2,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import keys from '../config/keys';
+import validateLoginInput from './validation/user_v'
 
 // Create a mock Axios instance
 const mockApi = axios.create();
 
-// Create a new instance of the Axios Mock Adapter
 const mock = new MockAdapter(mockApi);
 
 // Define mock data
@@ -58,21 +58,34 @@ mock.onPost('/test').reply(config => { // Get the data from the request body
     }
 });
 
+
 mock.onPost('/api/users/login').reply(config => { // Get the data from the request body
     const requestData = JSON.parse(config.data);
-
-    // Access specific POST parameters
     const {email, password, remember} = requestData;
 
-    // Customize the response based on the POST parameters
-    if (email != "test@email.com" && password != "123123123") 
-        return [400, {}]
+    const {errors, isValid} = validateLoginInput(requestData);
 
-    
+    // Check validation
+    if (!isValid) { // return res.status(400).json(errors);
+        return [
+            400, {
+                ...errors
+            }
+        ]
+    }
+
+    if (email != "test@email.com" || password != "321321321") {
+        errors.login_failed = "Wrong email or password";
+        return [
+            400, {
+                ...errors
+            }
+        ]
+    }
 
     return [
         200, {
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBlbWFpbC5jb20iLCJpYXQiOjE2OTQ2MDkxNzIsImV4cCI6MTY5NDY5NTU3Mn0.1no6OdFIMpWE6wnVskliY39y5g1PqshfMNSDkS5q5PU"
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBlbWFpbC5jb20iLCJpYXQiOjE2OTQ3MTkyNDMsImV4cCI6MTcyNTgyMzI0M30.AaLTDnCBaDrNy1bKdHKIY7MsSOFogy_u3PC1awhLd0c"
         }
     ]
 });

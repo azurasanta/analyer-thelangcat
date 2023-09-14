@@ -11,8 +11,10 @@
     "autoprefixer": "10.2.5",
     "axios-mock-adapter": "^1.22.0",
     "chart.js": "2.9.4",
+    "classnames": "^2.3.2",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
+    "is-empty": "^1.2.0",
     "jwt-decode": "^3.1.2",
     "postcss": "8.2.8",
     "react": "17.0.1",
@@ -20,7 +22,8 @@
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
-    "tailwindcss": "2.0.4"
+    "tailwindcss": "2.0.4",
+    "validator": "^13.11.0"
   },
   "scripts": {
     "start": "react-scripts start",
